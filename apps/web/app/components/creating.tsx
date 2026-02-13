@@ -124,7 +124,7 @@ export function Creating() {
             >
               {i < stepIndex ? "✓" : ""}
             </div>
-            <span className={i <= stepIndex ? "text-neutral-200" : "text-neutral-600"}>
+            <span className={i <= stepIndex ? "text-neutral-200" : "text-neutral-500"}>
               {step.label}
             </span>
           </div>

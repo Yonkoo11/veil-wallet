@@ -73,9 +73,9 @@ export function SendScreen() {
         <div className="flex items-center gap-3 mb-8">
           <button
             onClick={() => { cancel(); setPhase("form"); }}
-            className="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 transition-colors"
+            className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 active:bg-neutral-700 transition-colors"
           >
-            <span className="text-sm">←</span>
+            <span aria-hidden="true">←</span>
           </button>
           <h2 className="text-lg font-semibold">Send</h2>
         </div>
@@ -102,9 +102,9 @@ export function SendScreen() {
       <div className="flex items-center gap-3 mb-8">
         <button
           onClick={() => setScreen("dashboard")}
-          className="w-8 h-8 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 transition-colors"
+          className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 active:bg-neutral-700 transition-colors"
         >
-          <span className="text-sm">←</span>
+          <span aria-hidden="true">←</span>
         </button>
         <h2 className="text-lg font-semibold">Private Send</h2>
       </div>
@@ -120,7 +120,7 @@ export function SendScreen() {
         value={recipient}
         onChange={(e) => setRecipient(e.target.value)}
         placeholder="0zk1q..."
-        className={`w-full px-4 py-3 rounded-xl bg-neutral-900 border text-sm mb-4 focus:outline-none ${
+        className={`w-full px-4 py-3 rounded-xl bg-neutral-900 border mb-4 focus:outline-none ${
           recipient && !isValidRecipient
             ? "border-red-500/50 text-red-300"
             : "border-neutral-800 text-neutral-200 focus:border-indigo-500"
@@ -151,7 +151,7 @@ export function SendScreen() {
           value={amount}
           onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, "").replace(/(\..*)\./g, "$1"))}
           placeholder="0.00"
-          className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-200 text-sm focus:border-indigo-500 focus:outline-none pr-16"
+          className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-200 focus:border-indigo-500 focus:outline-none pr-16"
         />
         {availableBalance && (
           <button
@@ -163,7 +163,7 @@ export function SendScreen() {
         )}
       </div>
       {availableBalance && (
-        <p className="text-xs text-neutral-600 mb-6">
+        <p className="text-xs text-neutral-500 mb-6">
           Private balance: {availableBalance} {selectedToken.symbol}
         </p>
       )}
@@ -171,12 +171,12 @@ export function SendScreen() {
       <button
         onClick={handleSend}
         disabled={!amount || parseFloat(amount) <= 0 || !isValidRecipient}
-        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors mt-auto"
+        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors mt-auto"
       >
         Send Privately
       </button>
 
-      <p className="text-xs text-neutral-600 text-center mt-4">
+      <p className="text-xs text-neutral-500 text-center mt-4">
         Proof generation takes ~30 seconds
       </p>
     </div>

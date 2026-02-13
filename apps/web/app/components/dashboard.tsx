@@ -31,38 +31,39 @@ export function Dashboard() {
           <button
             onClick={() => navigator.clipboard.writeText(smartWalletAddress || "")}
             className="text-xs text-neutral-500 hover:text-neutral-300 transition-colors"
+            aria-label="Copy wallet address"
           >
             {smartWalletAddress ? truncateAddress(smartWalletAddress) : "---"}
           </button>
         </div>
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-green-500" />
+          <span className="w-2 h-2 rounded-full bg-green-500" aria-hidden="true" />
           <span className="text-xs text-neutral-500">Polygon</span>
         </div>
       </div>
 
       {/* Balance Card */}
-      <div className="rounded-2xl bg-neutral-900 border border-neutral-800 p-5 mb-6">
+      <div className="rounded-xl bg-neutral-900 border border-neutral-800 p-5 mb-6">
         <div className="mb-4">
           <p className="text-xs text-neutral-500 mb-1">Total Balance</p>
-          <p className="text-3xl font-semibold tracking-tight">
+          <p className="text-3xl font-semibold tracking-tight tabular-nums">
             ${(totalPublic + totalPrivate).toFixed(2)}
           </p>
         </div>
         <div className="flex gap-4 text-sm">
           <div>
             <p className="text-neutral-500 text-xs">Public</p>
-            <p className="text-neutral-200">${totalPublic.toFixed(2)}</p>
+            <p className="text-neutral-200 tabular-nums">${totalPublic.toFixed(2)}</p>
           </div>
           <div className="border-l border-neutral-800 pl-4">
-            <p className="text-neutral-500 text-xs">Private</p>
-            <p className="text-indigo-400">${totalPrivate.toFixed(2)}</p>
+            <p className="text-neutral-500 text-xs">Shielded</p>
+            <p className="text-indigo-400 tabular-nums">${totalPrivate.toFixed(2)}</p>
           </div>
         </div>
       </div>
 
       {/* Actions */}
-      <div className="grid grid-cols-5 gap-2 mb-8">
+      <div className="grid grid-cols-5 gap-3 mb-8">
         <ActionButton label="Shield" icon="↓" />
         <ActionButton label="Send" icon="↑" />
         <ActionButton label="Receive" icon="↙" />
@@ -75,8 +76,8 @@ export function Dashboard() {
         <h3 className="text-sm font-medium text-neutral-400 mb-3">Assets</h3>
         {publicBalances.length === 0 && privateBalances.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-neutral-600 text-sm">No assets yet</p>
-            <p className="text-neutral-700 text-xs mt-1">
+            <p className="text-neutral-500 text-sm">No assets yet</p>
+            <p className="text-neutral-500 text-xs mt-1">
               Deposit tokens to get started
             </p>
           </div>
@@ -109,9 +110,10 @@ function ActionButton({ label, icon }: { label: string; icon: string }) {
   return (
     <button
       onClick={() => setScreen(screenMap[label] as Parameters<typeof setScreen>[0])}
-      className="flex flex-col items-center gap-1.5 py-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-neutral-700 transition-colors"
+      className="flex flex-col items-center gap-1.5 py-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-neutral-700 active:bg-neutral-800 transition-colors min-h-[56px]"
+      aria-label={label}
     >
-      <span className="text-lg">{icon}</span>
+      <span className="text-lg" aria-hidden="true">{icon}</span>
       <span className="text-xs text-neutral-400">{label}</span>
     </button>
   );
@@ -136,10 +138,10 @@ function TokenRow({
         </div>
       </div>
       <div className="text-right">
-        <p className={`text-sm ${isPrivate ? "text-indigo-400" : ""}`}>
+        <p className={`text-sm tabular-nums ${isPrivate ? "text-indigo-400" : ""}`}>
           {token.balance}
         </p>
-        <p className="text-xs text-neutral-500">${token.usdValue}</p>
+        <p className="text-xs text-neutral-500 tabular-nums">${token.usdValue}</p>
       </div>
     </div>
   );

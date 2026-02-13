@@ -57,31 +57,33 @@ export function LoginScreen() {
           </p>
         </div>
 
+        <label htmlFor="login-password" className="sr-only">Password</label>
         <input
+          id="login-password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleUnlock()}
           placeholder="Password"
           autoFocus
-          className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-200 text-sm mb-4 focus:border-indigo-500 focus:outline-none"
+          className="w-full px-4 py-3.5 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-200 mb-4 focus:border-indigo-500 focus:outline-none"
         />
 
         {error && (
-          <p className="text-xs text-red-400 mb-4">{error}</p>
+          <p className="text-xs text-red-400 mb-4" role="alert">{error}</p>
         )}
 
         <button
           onClick={handleUnlock}
           disabled={password.length < 8 || loading}
-          className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors"
+          className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors"
         >
           {loading ? "Unlocking..." : "Unlock"}
         </button>
 
         <button
           onClick={() => setScreen("onboarding")}
-          className="w-full py-2 mt-3 text-xs text-neutral-600 hover:text-neutral-400 transition-colors"
+          className="w-full py-3 mt-3 text-xs text-neutral-500 hover:text-neutral-400 transition-colors"
         >
           Create new wallet instead
         </button>

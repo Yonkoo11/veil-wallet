@@ -6,12 +6,53 @@
   --color-accent-hover: #818cf8;
 }
 
-/* Safe area insets for PWA */
+/* ─── Foundation: font smoothing (Rule 27) ─── */
 body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+}
+
+/* ─── iOS zoom prevention: inputs must be >= 16px (Rule 22) ─── */
+input, textarea, select {
+  font-size: 16px;
+}
+
+/* ─── Tap highlight removal (Rule 26) ─── */
+button, a, [role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─── Focus-visible ring for all interactives (Rule 13) ─── */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #0a0a0a, 0 0 0 4px #6366f1;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
+/* ─── Tabular numbers for financial data (Rule 28) ─── */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Reduced motion (Rule 9) ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Prevent pull-to-refresh on mobile */

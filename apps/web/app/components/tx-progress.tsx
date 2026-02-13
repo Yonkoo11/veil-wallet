@@ -34,7 +34,7 @@ export function TxProgress({
               />
             </div>
           )}
-          <p className="text-xs text-neutral-600 mt-2">
+          <p className="text-xs text-neutral-500 mt-2 tabular-nums">
             {progress !== null ? `${Math.round(progress)}%` : "Starting..."}
           </p>
         </>
@@ -63,7 +63,7 @@ export function TxProgress({
           )}
           <button
             onClick={onDone}
-            className="px-8 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 text-white text-sm font-medium transition-colors"
+            className="px-8 py-2.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 text-white text-sm font-medium transition-colors"
           >
             Done
           </button>

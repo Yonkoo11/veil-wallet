@@ -24,7 +24,7 @@ export function Onboarding() {
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh px-6 py-12">
       {/* Logo */}
-      <div className="mb-12">
+      <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold tracking-tight">Veil</h1>
         <p className="text-neutral-500 text-sm mt-1">Private by default</p>
       </div>
@@ -32,7 +32,7 @@ export function Onboarding() {
       {/* Value props */}
       <div className="space-y-6 mb-10 w-full">
         <Feature
-          title="Private Transactions"
+          title="Shielded Transactions"
           desc="ZK-SNARK privacy for every transfer and swap"
         />
         <Feature
@@ -47,17 +47,19 @@ export function Onboarding() {
 
       {/* Password input */}
       <div className="w-full mb-4">
+        <label htmlFor="onboard-password" className="sr-only">Password</label>
         <input
+          id="onboard-password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleCreate()}
           placeholder="Choose a strong password"
-          className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 focus:border-indigo-500 focus:outline-none text-neutral-200 placeholder:text-neutral-600 text-sm"
+          className="w-full px-4 py-3.5 rounded-xl bg-neutral-900 border border-neutral-800 focus:border-indigo-500 focus:outline-none text-neutral-200 placeholder:text-neutral-500"
           autoComplete="new-password"
         />
         {error && (
-          <p className="text-red-400 text-xs mt-2">{error}</p>
+          <p className="text-red-400 text-xs mt-2" role="alert">{error}</p>
         )}
       </div>
 
@@ -65,7 +67,7 @@ export function Onboarding() {
       <button
         onClick={handleCreate}
         disabled={!password}
-        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors"
+        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors"
       >
         Create Wallet
       </button>
@@ -75,12 +77,12 @@ export function Onboarding() {
           // TODO: Import existing wallet flow
           setScreen("creating");
         }}
-        className="w-full py-3.5 rounded-xl border border-neutral-800 hover:border-neutral-700 text-neutral-300 font-medium mt-3 transition-colors"
+        className="w-full py-3.5 rounded-xl border border-neutral-800 hover:border-neutral-700 active:bg-neutral-900 text-neutral-300 font-medium mt-3 transition-colors"
       >
         Import Existing
       </button>
 
-      <p className="text-neutral-600 text-xs mt-6 text-center">
+      <p className="text-neutral-500 text-xs mt-6 text-center">
         Non-custodial. Your keys never leave this device.
       </p>
     </div>
@@ -90,7 +92,7 @@ export function Onboarding() {
 function Feature({ title, desc }: { title: string; desc: string }) {
   return (
     <div className="flex gap-3">
-      <div className="mt-1 w-2 h-2 rounded-full bg-indigo-500 shrink-0" />
+      <div className="mt-1.5 w-2 h-2 rounded-full bg-indigo-500 shrink-0" />
       <div>
         <p className="text-sm font-medium text-neutral-200">{title}</p>
         <p className="text-sm text-neutral-500">{desc}</p>
