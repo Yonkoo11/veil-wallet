@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useWalletStore } from "../store";
 import { useRailgunEngine } from "../hooks/use-railgun-engine";
 
-const STEPS = [
+const CREATE_STEPS = [
   { id: "auth", label: "Deriving keys..." },
   { id: "engine", label: "Initializing privacy engine..." },
   { id: "wallet", label: "Creating wallet..." },
@@ -12,7 +12,15 @@ const STEPS = [
   { id: "done", label: "Ready" },
 ] as const;
 
-type StepId = (typeof STEPS)[number]["id"];
+const IMPORT_STEPS = [
+  { id: "auth", label: "Validating mnemonic..." },
+  { id: "engine", label: "Initializing privacy engine..." },
+  { id: "wallet", label: "Restoring wallet..." },
+  { id: "encrypt", label: "Encrypting storage..." },
+  { id: "done", label: "Ready" },
+] as const;
+
+type StepId = (typeof CREATE_STEPS)[number]["id"];
 
 export function Creating() {
   const [currentStep, setCurrentStep] = useState<StepId>("auth");
@@ -23,7 +31,11 @@ export function Creating() {
   const setScreen = useWalletStore((s) => s.setScreen);
   const pendingAuthSecret = useWalletStore((s) => s.pendingAuthSecret);
   const setPendingAuthSecret = useWalletStore((s) => s.setPendingAuthSecret);
+  const pendingMnemonic = useWalletStore((s) => s.pendingMnemonic);
+  const setPendingMnemonic = useWalletStore((s) => s.setPendingMnemonic);
   const { engineStatus } = useRailgunEngine();
+  const isImport = !!pendingMnemonic;
+  const STEPS = isImport ? IMPORT_STEPS : CREATE_STEPS;
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -53,8 +65,14 @@ export function Creating() {
       try {
         setCurrentStep("wallet");
 
-        const { createWallet } = await import("@veil/core");
-        const result = await createWallet(authSecret);
+        let result;
+        if (pendingMnemonic) {
+          const { importWallet } = await import("@veil/core");
+          result = await importWallet(authSecret, pendingMnemonic);
+        } else {
+          const { createWallet } = await import("@veil/core");
+          result = await createWallet(authSecret);
+        }
 
         setCurrentStep("encrypt");
         await new Promise((r) => setTimeout(r, 400));
@@ -64,17 +82,19 @@ export function Creating() {
 
         // Clear sensitive material
         setPendingAuthSecret(null);
+        setPendingMnemonic(null);
 
         setAuthenticated(result.smartWalletAddress, result.railgunAddress, result.walletId, result.railgunEncryptionKey);
       } catch (err) {
         console.error("Wallet creation failed:", err);
         setError(err instanceof Error ? err.message : "Wallet creation failed");
         setPendingAuthSecret(null);
+        setPendingMnemonic(null);
       }
     };
 
     run();
-  }, [engineStatus, pendingAuthSecret, setAuthenticated, setPendingAuthSecret]);
+  }, [engineStatus, pendingAuthSecret, pendingMnemonic, setAuthenticated, setPendingAuthSecret, setPendingMnemonic]);
 
   const stepIndex = STEPS.findIndex((s) => s.id === currentStep);
 

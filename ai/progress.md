@@ -148,11 +148,15 @@ CSS-only animation system, zero new dependencies:
 - **Code-inspection only**: Error boundary fade-in + scale-in (can't trigger React render error in Puppeteer)
 - **Cannot verify with tools**: 50ms stagger feel to human eye, mobile touch interactions
 
-### Next Up: Import Wallet Flow
-- "Import Existing" button on onboarding.tsx is a dead placeholder (currently just navigates to creating)
-- Need: mnemonic/seed phrase input → derive same keys → restore wallet
-- Files to investigate: packages/core/src/wallet/create.ts (createWallet), onboarding.tsx, store.ts
-- Should reuse existing key derivation pipeline but with mnemonic as input instead of password
+### Completed - Import Wallet Flow (Feb 13)
+- `importWallet(authSecret, mnemonic, chain?)` in packages/core/src/wallet/create.ts
+- Extracted shared `_buildWallet()` helper (no code duplication with createWallet)
+- Mnemonic validation: 12 words required, SDK validates BIP39 correctness
+- Onboarding: mode toggle ("create" | "import") with separate UI for each
+- Import mode: mnemonic textarea + device password + Import Wallet CTA
+- Creating screen: import-specific step labels ("Validating mnemonic", "Restoring wallet")
+- Store: `pendingMnemonic` state, cleared after use
+- Puppeteer verified: create mode (no regression), import mode, validation error, creating screen, back-to-create
 
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.

@@ -37,6 +37,62 @@ export interface WalletSecrets {
 }
 
 /**
+ * Shared wallet-building logic used by both createWallet and importWallet.
+ * Takes a pre-derived masterSeed and a mnemonic (generated or imported).
+ */
+async function _buildWallet(
+  masterSeed: Uint8Array,
+  mnemonic: string,
+  chain: SupportedChain,
+): Promise<CreateWalletResult> {
+  const encKey = await deriveEncryptionKey(masterSeed);
+  const railgunEncKey = await deriveRailgunEncryptionKey(masterSeed);
+  const ownerKeyBytes = await deriveOwnerKeyBytes(masterSeed);
+
+  // Create Railgun wallet (requires engine to be initialized)
+  const { createRailgunWallet } = await import('@railgun-community/wallet');
+  const railgunWallet = await createRailgunWallet(
+    railgunEncKey,
+    mnemonic,
+    { Polygon: 0 },
+  );
+
+  // Derive EOA address from owner key via viem
+  const ownerKeyHex = `0x${Array.from(new Uint8Array(ownerKeyBytes)).map(b => b.toString(16).padStart(2, '0')).join('')}` as `0x${string}`;
+  const { privateKeyToAccount } = await import('viem/accounts');
+  const smartWalletAddress = privateKeyToAccount(ownerKeyHex).address as Address;
+  const railgunAddress = railgunWallet.railgunAddress as RailgunAddress;
+  const walletId = railgunWallet.id;
+
+  // Encrypt and store wallet secrets
+  const walletSecrets: WalletSecrets = {
+    mnemonic,
+    ownerKeyHex,
+    smartWalletAddress,
+    railgunAddress,
+  };
+  await setEncryptedJSON('wallet-secrets', walletSecrets, encKey);
+
+  const walletState: WalletState = {
+    smartWalletAddress,
+    railgunAddress,
+    encryptedMnemonic: new ArrayBuffer(0),
+    encryptedOwnerKey: new ArrayBuffer(0),
+    chain,
+    createdAt: Date.now(),
+  };
+  await setEncryptedJSON('wallet-state', walletState, encKey);
+
+  // Store walletId and railgunEncKey unencrypted (needed before unlock)
+  const { setPublic } = await import('../keys/storage');
+  await setPublic('wallet-id', walletId);
+  await setPublic('railgun-enc-key', railgunEncKey);
+  await setPublic('wallet-exists', true);
+
+  return { smartWalletAddress, railgunAddress, walletId, railgunEncryptionKey: railgunEncKey, chain };
+}
+
+/**
  * Create a new Veil wallet from an authentication secret.
  *
  * The auth secret comes from a password (v1) or passkey PRF (v2).
@@ -50,58 +106,37 @@ export async function createWallet(
   const masterSeed = await deriveMasterSeed(authSecret);
 
   try {
-    // Derive all keys from master seed
-    const encKey = await deriveEncryptionKey(masterSeed);
-    const railgunEncKey = await deriveRailgunEncryptionKey(masterSeed);
     const mnemonicEntropy = await deriveMnemonicEntropy(masterSeed);
-    const ownerKeyBytes = await deriveOwnerKeyBytes(masterSeed);
-
-    // Convert entropy to mnemonic (ethers v6 API)
     const { Mnemonic } = await import('ethers');
     const mnemonic = Mnemonic.fromEntropy(mnemonicEntropy).phrase;
 
-    // Create Railgun wallet (requires engine to be initialized)
-    const { createRailgunWallet } = await import('@railgun-community/wallet');
-    const railgunWallet = await createRailgunWallet(
-      railgunEncKey,
-      mnemonic,
-      { Polygon: 0 },
-    );
+    return await _buildWallet(masterSeed, mnemonic, chain);
+  } finally {
+    zeroize(masterSeed);
+  }
+}
 
-    // Derive EOA address from owner key via viem
-    const ownerKeyHex = `0x${Array.from(new Uint8Array(ownerKeyBytes)).map(b => b.toString(16).padStart(2, '0')).join('')}` as `0x${string}`;
-    const { privateKeyToAccount } = await import('viem/accounts');
-    const smartWalletAddress = privateKeyToAccount(ownerKeyHex).address as Address;
-    const railgunAddress = railgunWallet.railgunAddress as RailgunAddress;
-    const walletId = railgunWallet.id;
+/**
+ * Import an existing wallet using a BIP39 mnemonic phrase.
+ *
+ * The mnemonic restores the same Railgun 0zk address. The password
+ * (authSecret) protects storage on this device -- a different password
+ * produces a different EOA address but the same privacy address.
+ */
+export async function importWallet(
+  authSecret: Uint8Array,
+  mnemonic: string,
+  chain: SupportedChain = 'polygon',
+): Promise<CreateWalletResult> {
+  const words = mnemonic.trim().split(/\s+/);
+  if (words.length !== 12) {
+    throw new Error('Mnemonic must be exactly 12 words');
+  }
 
-    // Encrypt and store wallet secrets
-    const walletSecrets: WalletSecrets = {
-      mnemonic,
-      ownerKeyHex,
-      smartWalletAddress,
-      railgunAddress,
-    };
-    await setEncryptedJSON('wallet-secrets', walletSecrets, encKey);
+  const masterSeed = await deriveMasterSeed(authSecret);
 
-    const walletState: WalletState = {
-      smartWalletAddress,
-      railgunAddress,
-      encryptedMnemonic: new ArrayBuffer(0),
-      encryptedOwnerKey: new ArrayBuffer(0),
-      chain,
-      createdAt: Date.now(),
-    };
-    await setEncryptedJSON('wallet-state', walletState, encKey);
-
-    // Store walletId and railgunEncKey unencrypted (needed before unlock)
-    const { setPublic } = await import('../keys/storage');
-    await setPublic('wallet-id', walletId);
-    await setPublic('railgun-enc-key', railgunEncKey);
-    // Store a flag so we know a wallet exists
-    await setPublic('wallet-exists', true);
-
-    return { smartWalletAddress, railgunAddress, walletId, railgunEncryptionKey: railgunEncKey, chain };
+  try {
+    return await _buildWallet(masterSeed, mnemonic.trim(), chain);
   } finally {
     zeroize(masterSeed);
   }

@@ -23,6 +23,7 @@ interface WalletStore {
 
   // Wallet creation
   pendingAuthSecret: Uint8Array | null;
+  pendingMnemonic: string | null;
   creationError: string | null;
 
   // Wallet info
@@ -54,6 +55,7 @@ interface WalletStore {
   setEngineStatus: (status: EngineStatus) => void;
   setEngineError: (error: string) => void;
   setPendingAuthSecret: (secret: Uint8Array | null) => void;
+  setPendingMnemonic: (mnemonic: string | null) => void;
   setCreationError: (error: string | null) => void;
   reset: () => void;
 }
@@ -64,6 +66,7 @@ export const useWalletStore = create<WalletStore>((set) => ({
   engineStatus: "idle",
   engineError: null,
   pendingAuthSecret: null,
+  pendingMnemonic: null,
   creationError: null,
   smartWalletAddress: null,
   railgunAddress: null,
@@ -87,6 +90,7 @@ export const useWalletStore = create<WalletStore>((set) => ({
   setEngineStatus: (engineStatus) => set({ engineStatus }),
   setEngineError: (error) => set({ engineStatus: "error", engineError: error }),
   setPendingAuthSecret: (pendingAuthSecret) => set({ pendingAuthSecret }),
+  setPendingMnemonic: (pendingMnemonic) => set({ pendingMnemonic }),
   setCreationError: (creationError) => set({ creationError }),
   reset: () =>
     set({
@@ -102,6 +106,7 @@ export const useWalletStore = create<WalletStore>((set) => ({
       engineStatus: "idle",
       engineError: null,
       pendingAuthSecret: null,
+      pendingMnemonic: null,
       creationError: null,
     }),
 }));

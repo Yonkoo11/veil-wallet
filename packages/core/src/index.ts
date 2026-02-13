@@ -48,5 +48,5 @@ export { broadcastShield, broadcastPrivate } from './railgun/broadcast';
 export { getPrivateBalances, scanBalances, fullResync } from './railgun/scan';
 
 // Wallet
-export { createWallet, loadWallet, checkWalletExists } from './wallet/create';
+export { createWallet, importWallet, loadWallet, checkWalletExists } from './wallet/create';
 export { setupRecovery, initiateRecovery } from './wallet/recovery';
