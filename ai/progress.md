@@ -148,13 +148,18 @@ CSS-only animation system, zero new dependencies:
 - **Code-inspection only**: Error boundary fade-in + scale-in (can't trigger React render error in Puppeteer)
 - **Cannot verify with tools**: 50ms stagger feel to human eye, mobile touch interactions
 
+### Next Up: Import Wallet Flow
+- "Import Existing" button on onboarding.tsx is a dead placeholder (currently just navigates to creating)
+- Need: mnemonic/seed phrase input → derive same keys → restore wallet
+- Files to investigate: packages/core/src/wallet/create.ts (createWallet), onboarding.tsx, store.ts
+- Should reuse existing key derivation pipeline but with mnemonic as input instead of password
+
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.
-2. **Import wallet flow**: "Import Wallet" button on onboarding is placeholder.
-4. **Social recovery**: recovery.ts throws "not implemented".
-5. **Service worker**: 50MB Railgun artifacts not cached offline.
-6. **ZeroDev smart wallet**: Phase 2 (ERC-4337).
-7. **Passkey PRF auth**: Phase 2.
+2. **Social recovery**: recovery.ts throws "not implemented".
+3. **Service worker**: 50MB Railgun artifacts not cached offline.
+4. **ZeroDev smart wallet**: Phase 2 (ERC-4337).
+5. **Passkey PRF auth**: Phase 2.
 
 ### Chainlink Hackathon
 - Privacy track or CRE & AI track - both fit
