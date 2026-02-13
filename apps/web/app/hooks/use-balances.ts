@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useWalletStore } from "../store";
 import { POLYGON_TOKENS, formatTokenAmount, type Token } from "@/lib/tokens";
+import { fetchPrices, getUsdValue } from "@/lib/prices";
 
 const ERC20_ABI = [
   {
@@ -74,6 +75,12 @@ export function useBalances() {
         }
       }
 
+      // Enrich with USD prices
+      const prices = await fetchPrices();
+      for (const b of balances) {
+        b.usdValue = getUsdValue(b.address, b.balance, prices);
+      }
+
       setPublicBalances(balances);
     } catch (err) {
       console.error("Failed to fetch public balances:", err);
@@ -94,15 +101,17 @@ export function useBalances() {
       const { getPrivateBalances } = await import("@veil/core");
       const rawBalances = await getPrivateBalances(walletId, "polygon");
 
+      const prices = await fetchPrices();
       const balances: BalanceEntry[] = rawBalances.map((b) => {
         const token = POLYGON_TOKENS.find(
           (t) => t.address.toLowerCase() === b.token.toLowerCase(),
         );
+        const formatted = formatTokenAmount(b.balance, token?.decimals || b.decimals);
         return {
           symbol: token?.symbol || b.token.slice(0, 6),
           name: token?.name || "Unknown",
-          balance: formatTokenAmount(b.balance, token?.decimals || b.decimals),
-          usdValue: "0.00",
+          balance: formatted,
+          usdValue: getUsdValue(b.token, formatted, prices),
           address: b.token,
           decimals: token?.decimals || b.decimals,
         };
@@ -142,7 +151,7 @@ function tokenToBalance(token: Token, rawBalance: bigint): BalanceEntry {
     symbol: token.symbol,
     name: token.name,
     balance: formatTokenAmount(rawBalance, token.decimals),
-    usdValue: "0.00", // TODO: Price feed integration
+    usdValue: "0.00", // enriched after fetch
     address: token.address,
     decimals: token.decimals,
   };
