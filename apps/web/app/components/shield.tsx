@@ -99,8 +99,8 @@ export function ShieldScreen() {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh px-4 py-6 fade-in">
-      <div className="flex items-center gap-3 mb-8">
+    <div className="flex flex-col min-h-dvh px-4 py-6">
+      <div className="flex items-center gap-3 mb-8 fade-in">
         <button
           onClick={() => setScreen("dashboard")}
           className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 active:bg-neutral-700 transition-colors"
@@ -110,18 +110,18 @@ export function ShieldScreen() {
         <h2 className="text-lg font-semibold">Shield Tokens</h2>
       </div>
 
-      <p className="text-sm text-neutral-500 mb-6">
+      <p className="text-sm text-neutral-500 mb-6 fade-in delay-1">
         Move tokens from your public balance into the private pool.
       </p>
 
-      <label className="text-xs text-neutral-500 mb-2">Token</label>
+      <label className="text-xs text-neutral-500 mb-2 fade-in delay-2">Token</label>
       <select
         value={selectedToken.address}
         onChange={(e) => {
           const token = POLYGON_TOKENS.find((t) => t.address === e.target.value);
           if (token) setSelectedToken(token);
         }}
-        className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-200 text-sm mb-4 focus:border-indigo-500 focus:outline-none"
+        className="w-full px-4 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-neutral-200 text-sm mb-4 focus:border-indigo-500 focus:outline-none fade-in delay-2"
       >
         {POLYGON_TOKENS.filter((t) => !t.isNative).map((token) => (
           <option key={token.address} value={token.address}>
@@ -130,8 +130,8 @@ export function ShieldScreen() {
         ))}
       </select>
 
-      <label className="text-xs text-neutral-500 mb-2">Amount</label>
-      <div className="relative mb-2">
+      <label className="text-xs text-neutral-500 mb-2 fade-in delay-3">Amount</label>
+      <div className="relative mb-2 fade-in delay-3">
         <input
           type="text"
           inputMode="decimal"
@@ -158,7 +158,7 @@ export function ShieldScreen() {
       <button
         onClick={handleShield}
         disabled={!amount || parseFloat(amount) <= 0}
-        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors mt-auto"
+        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors mt-auto fade-in delay-4"
       >
         Shield {selectedToken.symbol}
       </button>

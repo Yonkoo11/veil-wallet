@@ -122,6 +122,14 @@ CSS-only animation system, zero new dependencies:
 - Privacy glow (glow-indigo): balance card + private address card
 - Success/error icon scale-in pop on tx-progress
 - Respects prefers-reduced-motion, animation-fill-mode: backwards (no transform conflicts)
+- Round 2 (commit a0bffa6):
+  - Copy feedback: green flash on dashboard address + receive buttons
+  - Balance card: indigo border tint (border-indigo-500/20)
+  - Token row: indigo icon for private tokens (bg-indigo-500/20)
+  - Network dot: breathing pulse (statusPulse 2s)
+  - Action buttons: hover lift (-translate-y-0.5) + settle on press
+  - Creating steps: transition-all + pulse-alive on active step
+  - Input fields: smooth border-color focus transitions
 
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.

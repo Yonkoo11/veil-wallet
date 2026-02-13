@@ -137,8 +137,8 @@ export function SwapScreen() {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh px-4 py-6 fade-in">
-      <div className="flex items-center gap-3 mb-8">
+    <div className="flex flex-col min-h-dvh px-4 py-6">
+      <div className="flex items-center gap-3 mb-8 fade-in">
         <button
           onClick={() => setScreen("dashboard")}
           className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 active:bg-neutral-700 transition-colors"
@@ -148,12 +148,12 @@ export function SwapScreen() {
         <h2 className="text-lg font-semibold">Private Swap</h2>
       </div>
 
-      <p className="text-sm text-neutral-500 mb-6">
+      <p className="text-sm text-neutral-500 mb-6 fade-in delay-1">
         Swap tokens privately. Unshield, swap on DEX, re-shield atomically.
       </p>
 
-      <label className="text-xs text-neutral-500 mb-2">You sell</label>
-      <div className="flex gap-2 mb-4">
+      <label className="text-xs text-neutral-500 mb-2 fade-in delay-2">You sell</label>
+      <div className="flex gap-2 mb-4 fade-in delay-2">
         <select
           value={sellToken.address}
           onChange={(e) => {
@@ -181,14 +181,14 @@ export function SwapScreen() {
         </p>
       )}
 
-      <div className="flex justify-center my-2">
+      <div className="flex justify-center my-2 fade-in delay-3">
         <div className="w-8 h-8 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-500">
           ↓
         </div>
       </div>
 
-      <label className="text-xs text-neutral-500 mb-2 mt-2">You receive</label>
-      <div className="flex gap-2 mb-6">
+      <label className="text-xs text-neutral-500 mb-2 mt-2 fade-in delay-3">You receive</label>
+      <div className="flex gap-2 mb-6 fade-in delay-3">
         <select
           value={buyToken.address}
           onChange={(e) => {
@@ -212,14 +212,14 @@ export function SwapScreen() {
         <button
           onClick={handleGetQuote}
           disabled={!sellAmount || parseFloat(sellAmount) <= 0 || phase === "quoting"}
-          className="w-full py-3.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600 disabled:opacity-40 disabled:cursor-not-allowed text-neutral-200 font-medium transition-colors mt-auto"
+          className="w-full py-3.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600 disabled:opacity-40 disabled:cursor-not-allowed text-neutral-200 font-medium transition-colors mt-auto fade-in delay-4"
         >
           {phase === "quoting" ? "Getting quote..." : "Get Quote"}
         </button>
       ) : (
         <button
           onClick={handleSwap}
-          className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 text-white font-medium transition-colors mt-auto"
+          className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 text-white font-medium transition-colors mt-auto fade-in delay-4"
         >
           Swap Privately
         </button>
