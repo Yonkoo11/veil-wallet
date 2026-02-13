@@ -39,7 +39,11 @@ export function ReceiveScreen() {
         </p>
         <button
           onClick={() => smartWalletAddress && copyAddress(smartWalletAddress, "public")}
-          className="w-full py-2.5 rounded-xl bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600 text-sm text-neutral-300 transition-colors"
+          className={`w-full py-2.5 rounded-xl text-sm transition-colors ${
+            copied === "public"
+              ? "bg-green-500/20 text-green-400"
+              : "bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-600 text-neutral-300"
+          }`}
         >
           {copied === "public" ? "Copied!" : "Copy Address"}
         </button>
@@ -58,7 +62,11 @@ export function ReceiveScreen() {
         </p>
         <button
           onClick={() => railgunAddress && copyAddress(railgunAddress, "private")}
-          className="w-full py-2.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 active:bg-indigo-500/40 text-sm text-indigo-300 transition-colors"
+          className={`w-full py-2.5 rounded-xl text-sm transition-colors ${
+            copied === "private"
+              ? "bg-green-500/20 text-green-400"
+              : "bg-indigo-500/20 hover:bg-indigo-500/30 active:bg-indigo-500/40 text-indigo-300"
+          }`}
         >
           {copied === "private" ? "Copied!" : "Copy Private Address"}
         </button>

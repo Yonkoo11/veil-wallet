@@ -106,3 +106,17 @@ button:active:not(:disabled) {
 .glow-indigo {
   box-shadow: 0 0 24px -8px rgba(99, 102, 241, 0.15);
 }
+
+/* ─── Status pulse (network dot, active step) ─── */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.pulse-alive {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* ─── Smooth input focus transitions ─── */
+input, textarea, select {
+  transition: border-color 200ms ease;
+}

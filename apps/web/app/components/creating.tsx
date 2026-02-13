@@ -114,17 +114,17 @@ export function Creating() {
             }`}
           >
             <div
-              className={`w-4 h-4 rounded-full flex items-center justify-center text-xs ${
+              className={`w-4 h-4 rounded-full flex items-center justify-center text-xs transition-all duration-300 ${
                 i < stepIndex
                   ? "bg-green-500/20 text-green-400"
                   : i === stepIndex
-                    ? "bg-indigo-500/20 text-indigo-400"
+                    ? "bg-indigo-500/20 text-indigo-400 pulse-alive"
                     : "bg-neutral-800"
               }`}
             >
               {i < stepIndex ? "✓" : ""}
             </div>
-            <span className={i <= stepIndex ? "text-neutral-200" : "text-neutral-500"}>
+            <span className={`transition-colors duration-300 ${i <= stepIndex ? "text-neutral-200" : "text-neutral-500"}`}>
               {step.label}
             </span>
           </div>

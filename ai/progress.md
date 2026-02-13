@@ -94,13 +94,38 @@ Ran comprehensive 25-issue audit. Fixed all actionable items:
 - viem + ethers in both core and web packages
 - Production build: 2m57s, 0 errors, 3 static routes
 
-### In Progress - UI Revamp (Phase 3)
-Audit complete. 10 issues found. Implementing fixes across all files.
+### Completed - UI Revamp (Feb 13)
+14-point audit fix applied across all 11 component files + globals.css:
+- Focus-visible rings, 40px touch targets, 16px inputs (iOS), prefers-reduced-motion
+- Border-radius consolidated (xl + full only), contrast upgraded (neutral-500 min)
+- Tabular-nums on financial data, active states, aria-labels, honest "shielded" copy
+- Automated audit: 0 violations
+
+### Completed - GitHub Repo + Pages Deploy (Feb 13)
+- Repo: https://github.com/Yonkoo11/veil-wallet
+- Pages: https://yonkoo11.github.io/veil-wallet/
+- Static export with basePath=/veil-wallet, SPA 404.html fallback
+- GitHub Actions workflow on push to main
+
+### Completed - Price Feeds (Feb 13)
+- CoinGecko free API (no key needed), 1-min cache, 5s timeout
+- lib/prices.ts: fetchPrices() + getUsdValue()
+- Wired into use-balances.ts for both public and private balances
+- Supports: POL, USDC, USDT, WETH, DAI, WPOL
+
+### Completed - Visual Cohesion ("Feel Alive") (Feb 13)
+CSS-only animation system, zero new dependencies:
+- fadeInUp + scaleIn keyframes with cubic-bezier(0.22, 1, 0.36, 1) ease-out
+- Staggered entrances: onboarding (5 sections), dashboard (4), receive (4)
+- Screen-level fade-in on all tx screens (shield, send, swap, unshield)
+- Global button press feedback: scale(0.97) on :active
+- Privacy glow (glow-indigo): balance card + private address card
+- Success/error icon scale-in pop on tx-progress
+- Respects prefers-reduced-motion, animation-fill-mode: backwards (no transform conflicts)
 
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.
-2. **USD price feeds**: All tokens show $0.00. Need CoinGecko/CMC integration.
-3. **Import wallet flow**: "Import Wallet" button on onboarding is placeholder.
+2. **Import wallet flow**: "Import Wallet" button on onboarding is placeholder.
 4. **Social recovery**: recovery.ts throws "not implemented".
 5. **Service worker**: 50MB Railgun artifacts not cached offline.
 6. **ZeroDev smart wallet**: Phase 2 (ERC-4337).
