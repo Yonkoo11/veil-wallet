@@ -1,6 +1,15 @@
 import type { NextConfig } from "next";
 
+const isGHPages = process.env.GITHUB_PAGES === "true";
+
 const nextConfig: NextConfig = {
+  // Static export for GitHub Pages
+  ...(isGHPages && {
+    output: "export",
+    basePath: "/veil-wallet",
+    images: { unoptimized: true },
+  }),
+
   // Transpile workspace packages
   transpilePackages: ["@veil/core"],
 
