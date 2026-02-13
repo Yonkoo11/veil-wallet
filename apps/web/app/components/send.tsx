@@ -176,7 +176,7 @@ export function SendScreen() {
         Send Privately
       </button>
 
-      <p className="text-xs text-neutral-500 text-center mt-4">
+      <p className="text-xs text-neutral-500 text-center mt-4 fade-in delay-5">
         Proof generation takes ~30 seconds
       </p>
     </div>

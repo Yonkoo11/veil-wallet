@@ -225,7 +225,7 @@ export function SwapScreen() {
         </button>
       )}
 
-      <p className="text-xs text-neutral-500 text-center mt-4">
+      <p className="text-xs text-neutral-500 text-center mt-4 fade-in delay-5">
         0.85% fee on swap output
       </p>
     </div>

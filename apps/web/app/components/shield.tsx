@@ -163,7 +163,7 @@ export function ShieldScreen() {
         Shield {selectedToken.symbol}
       </button>
 
-      <p className="text-xs text-neutral-500 text-center mt-4">
+      <p className="text-xs text-neutral-500 text-center mt-4 fade-in delay-5">
         Shielding requires a ZK proof (~30 seconds)
       </p>
     </div>
