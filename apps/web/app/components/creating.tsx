@@ -80,7 +80,7 @@ export function Creating() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-dvh px-6">
+      <div className="flex flex-col items-center justify-center min-h-dvh px-6 fade-in">
         <div className="w-12 h-12 rounded-full bg-red-500/20 flex items-center justify-center mb-6">
           <span className="text-red-400 text-xl">!</span>
         </div>
@@ -100,7 +100,7 @@ export function Creating() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-dvh px-6">
+    <div className="flex flex-col items-center justify-center min-h-dvh px-6 fade-in">
       {/* Spinner */}
       <div className="w-12 h-12 rounded-full border-2 border-neutral-800 border-t-indigo-500 animate-spin mb-8" />
 

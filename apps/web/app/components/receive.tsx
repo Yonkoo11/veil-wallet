@@ -18,7 +18,7 @@ export function ReceiveScreen() {
   return (
     <div className="flex flex-col min-h-dvh px-4 py-6">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-8">
+      <div className="flex items-center gap-3 mb-8 fade-in">
         <button
           onClick={() => setScreen("dashboard")}
           className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 active:bg-neutral-700 transition-colors"
@@ -29,7 +29,7 @@ export function ReceiveScreen() {
       </div>
 
       {/* Public Address */}
-      <div className="rounded-xl bg-neutral-900 border border-neutral-800 p-5 mb-4">
+      <div className="rounded-xl bg-neutral-900 border border-neutral-800 p-5 mb-4 fade-in delay-1">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-medium text-neutral-400">Public Address</p>
           <span className="text-xs text-neutral-500">ERC-20 tokens</span>
@@ -46,7 +46,7 @@ export function ReceiveScreen() {
       </div>
 
       {/* Private Address */}
-      <div className="rounded-xl bg-neutral-900 border border-indigo-500/30 p-5 mb-4">
+      <div className="rounded-xl bg-neutral-900 border border-indigo-500/30 p-5 mb-4 fade-in delay-2 glow-indigo">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-medium text-indigo-400">
             Private Address (0zk)
@@ -65,7 +65,7 @@ export function ReceiveScreen() {
       </div>
 
       {/* Info */}
-      <div className="rounded-xl bg-neutral-900/50 border border-neutral-800/50 p-4 mt-2">
+      <div className="rounded-xl bg-neutral-900/50 border border-neutral-800/50 p-4 mt-2 fade-in delay-3">
         <p className="text-xs text-neutral-500 leading-relaxed">
           <strong className="text-neutral-400">Public address:</strong> Send any
           ERC-20 tokens here. They will appear in your public balance.

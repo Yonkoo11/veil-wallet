@@ -68,3 +68,41 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ─── Entrance animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    scale: 0.9;
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 400ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.fade-in.delay-1 { animation-delay: 50ms; }
+.fade-in.delay-2 { animation-delay: 100ms; }
+.fade-in.delay-3 { animation-delay: 150ms; }
+.fade-in.delay-4 { animation-delay: 200ms; }
+.fade-in.delay-5 { animation-delay: 250ms; }
+
+.scale-in {
+  animation: scaleIn 400ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* ─── Button press feedback (all buttons) ─── */
+button:active:not(:disabled) {
+  scale: 0.97;
+}
+
+/* ─── Visual identity: privacy glow ─── */
+.glow-indigo {
+  box-shadow: 0 0 24px -8px rgba(99, 102, 241, 0.15);
+}

@@ -49,7 +49,7 @@ export function LoginScreen() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh px-6">
-      <div className="w-full max-w-xs">
+      <div className="w-full max-w-xs fade-in">
         <div className="text-center mb-10">
           <h1 className="text-2xl font-semibold mb-2">Welcome back</h1>
           <p className="text-sm text-neutral-500">

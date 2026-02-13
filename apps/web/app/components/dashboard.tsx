@@ -25,7 +25,7 @@ export function Dashboard() {
   return (
     <div className="flex flex-col min-h-dvh px-4 py-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-6 fade-in">
         <div>
           <h2 className="text-lg font-semibold">Veil</h2>
           <button
@@ -43,7 +43,7 @@ export function Dashboard() {
       </div>
 
       {/* Balance Card */}
-      <div className="rounded-xl bg-neutral-900 border border-neutral-800 p-5 mb-6">
+      <div className="rounded-xl bg-neutral-900 border border-neutral-800 p-5 mb-6 fade-in delay-1 glow-indigo">
         <div className="mb-4">
           <p className="text-xs text-neutral-500 mb-1">Total Balance</p>
           <p className="text-3xl font-semibold tracking-tight tabular-nums">
@@ -63,7 +63,7 @@ export function Dashboard() {
       </div>
 
       {/* Actions */}
-      <div className="grid grid-cols-5 gap-3 mb-8">
+      <div className="grid grid-cols-5 gap-3 mb-8 fade-in delay-2">
         <ActionButton label="Shield" icon="↓" />
         <ActionButton label="Send" icon="↑" />
         <ActionButton label="Receive" icon="↙" />
@@ -72,7 +72,7 @@ export function Dashboard() {
       </div>
 
       {/* Token List */}
-      <div>
+      <div className="fade-in delay-3">
         <h3 className="text-sm font-medium text-neutral-400 mb-3">Assets</h3>
         {publicBalances.length === 0 && privateBalances.length === 0 ? (
           <div className="text-center py-12">

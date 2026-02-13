@@ -24,13 +24,13 @@ export function Onboarding() {
   return (
     <div className="flex flex-col items-center justify-center min-h-dvh px-6 py-12">
       {/* Logo */}
-      <div className="mb-12 text-center">
+      <div className="mb-12 text-center fade-in">
         <h1 className="text-4xl font-bold tracking-tight">Veil</h1>
         <p className="text-neutral-500 text-sm mt-1">Private by default</p>
       </div>
 
       {/* Value props */}
-      <div className="space-y-6 mb-10 w-full">
+      <div className="space-y-6 mb-10 w-full fade-in delay-1">
         <Feature
           title="Shielded Transactions"
           desc="ZK-SNARK privacy for every transfer and swap"
@@ -46,7 +46,7 @@ export function Onboarding() {
       </div>
 
       {/* Password input */}
-      <div className="w-full mb-4">
+      <div className="w-full mb-4 fade-in delay-2">
         <label htmlFor="onboard-password" className="sr-only">Password</label>
         <input
           id="onboard-password"
@@ -67,7 +67,7 @@ export function Onboarding() {
       <button
         onClick={handleCreate}
         disabled={!password}
-        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors"
+        className="w-full py-3.5 rounded-xl bg-indigo-500 hover:bg-indigo-400 active:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-medium transition-colors fade-in delay-3"
       >
         Create Wallet
       </button>
@@ -77,12 +77,12 @@ export function Onboarding() {
           // TODO: Import existing wallet flow
           setScreen("creating");
         }}
-        className="w-full py-3.5 rounded-xl border border-neutral-800 hover:border-neutral-700 active:bg-neutral-900 text-neutral-300 font-medium mt-3 transition-colors"
+        className="w-full py-3.5 rounded-xl border border-neutral-800 hover:border-neutral-700 active:bg-neutral-900 text-neutral-300 font-medium mt-3 transition-colors fade-in delay-3"
       >
         Import Existing
       </button>
 
-      <p className="text-neutral-500 text-xs mt-6 text-center">
+      <p className="text-neutral-500 text-xs mt-6 text-center fade-in delay-4">
         Non-custodial. Your keys never leave this device.
       </p>
     </div>

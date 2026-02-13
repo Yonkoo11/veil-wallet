@@ -50,7 +50,7 @@ export function TxProgress({
 
       {status === "success" && (
         <>
-          <div className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center mb-6">
+          <div className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center mb-6 scale-in">
             <span className="text-green-400 text-2xl">✓</span>
           </div>
           <p className="text-sm font-medium text-neutral-200 mb-2">
@@ -72,7 +72,7 @@ export function TxProgress({
 
       {status === "error" && (
         <>
-          <div className="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center mb-6">
+          <div className="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center mb-6 scale-in">
             <span className="text-red-400 text-2xl">!</span>
           </div>
           <p className="text-sm font-medium text-neutral-200 mb-2">

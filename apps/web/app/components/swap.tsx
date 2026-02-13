@@ -137,7 +137,7 @@ export function SwapScreen() {
   }
 
   return (
-    <div className="flex flex-col min-h-dvh px-4 py-6">
+    <div className="flex flex-col min-h-dvh px-4 py-6 fade-in">
       <div className="flex items-center gap-3 mb-8">
         <button
           onClick={() => setScreen("dashboard")}
