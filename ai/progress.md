@@ -135,12 +135,18 @@ CSS-only animation system, zero new dependencies:
   - Login inner stagger (header→input→button→link)
   - Footer hint text fade-in on all tx screens
   - Error boundary: fade-in + scale-in on error icon
-- Puppeteer layout verification (390x844): all 9 screens render correctly
-- prefers-reduced-motion confirmed working (kills all animations in Puppeteer)
-- **NOT verified**: animation timing/feel (Puppeteer had reduced-motion, can't capture temporal effects in screenshots). Needs manual check in real browser at localhost:3000
-- **NOT verified**: Creating screen step animation (wallet creates in <1s, too fast to capture)
-- **NOT verified**: TxProgress proof/broadcast flow (requires on-chain tx)
-- Code changes are complete across all 11 components. Manual visual QA needed on real device.
+- Puppeteer verification (390x844, motion enabled via --force-prefers-no-reduced-motion):
+  - All 9 screen layouts screenshotted: onboarding, login, dashboard, receive, shield, send, swap, unshield + creating (DOM observer)
+  - Animation computed styles confirmed: fadeInUp 0.4s cubic-bezier(0.22,1,0.36,1) backwards
+  - Stagger delays verified on Unshield: 0s→0.05s→0.1s→0.15s→0.2s→0.25s
+  - Creating screen: 5-step progression captured via MutationObserver (checkmarks + pulse-alive over ~7s)
+  - TxProgress error: scaleIn 0.4s confirmed via computed styles
+  - Copy feedback: bg-green-500/20 + text-green-400 classes applied, "Copied!" text confirmed
+  - Hover lift: class present, transition: all 0.2s, visual lift captured via forced state
+  - Button press: CSS rule `button:active:not(:disabled) { scale: 0.97 }` in stylesheet, property supported
+  - prefers-reduced-motion: confirmed kills all animations (tested both states)
+- **Code-inspection only**: Error boundary fade-in + scale-in (can't trigger React render error in Puppeteer)
+- **Cannot verify with tools**: 50ms stagger feel to human eye, mobile touch interactions
 
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.
