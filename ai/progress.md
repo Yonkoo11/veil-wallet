@@ -130,6 +130,13 @@ CSS-only animation system, zero new dependencies:
   - Action buttons: hover lift (-translate-y-0.5) + settle on press
   - Creating steps: transition-all + pulse-alive on active step
   - Input fields: smooth border-color focus transitions
+- Round 3 (commits 2b80db7, 321f626, 576d5de):
+  - Form section stagger on shield, send, swap, unshield (header→desc→fields→CTA→footer)
+  - Login inner stagger (header→input→button→link)
+  - Footer hint text fade-in on all tx screens
+  - Error boundary: fade-in + scale-in on error icon
+- Verified via Puppeteer (390x844): all 9 main screens render correctly
+- prefers-reduced-motion confirmed working (kills all animations in Puppeteer)
 
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.
