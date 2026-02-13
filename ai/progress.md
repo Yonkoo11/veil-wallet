@@ -135,8 +135,12 @@ CSS-only animation system, zero new dependencies:
   - Login inner stagger (header→input→button→link)
   - Footer hint text fade-in on all tx screens
   - Error boundary: fade-in + scale-in on error icon
-- Verified via Puppeteer (390x844): all 9 main screens render correctly
+- Puppeteer layout verification (390x844): all 9 screens render correctly
 - prefers-reduced-motion confirmed working (kills all animations in Puppeteer)
+- **NOT verified**: animation timing/feel (Puppeteer had reduced-motion, can't capture temporal effects in screenshots). Needs manual check in real browser at localhost:3000
+- **NOT verified**: Creating screen step animation (wallet creates in <1s, too fast to capture)
+- **NOT verified**: TxProgress proof/broadcast flow (requires on-chain tx)
+- Code changes are complete across all 11 components. Manual visual QA needed on real device.
 
 ### What Still Needs Work
 1. **Broadcaster integration**: Currently all txs go direct to RPC. Need Waku P2P broadcaster for privacy.
